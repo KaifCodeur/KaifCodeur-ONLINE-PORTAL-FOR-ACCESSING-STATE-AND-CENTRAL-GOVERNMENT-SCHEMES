@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Central Government Schemes</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .user-section {
+            text-align: right;
+            margin-right: 20px;
+        }
+
+        .user-section a {
+            color: #333;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        .search-filter-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        #searchInput,
+        #filterSelect {
+            margin-left: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            outline: none;
+        }
+
+        #filterSelect {
+            min-width: 150px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        td:last-child {
+            text-align: center;
+        }
+        td:nth-child(2), /* Description */
+        td:nth-child(4), /* Eligibility */
+        td:nth-child(5) { /* Beneficiaries */
+            text-align: justify;
+        }
+        td:last-child {
+            text-align: center;
+        }
+
+        button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+      function populateFilterOptions() {
+        let table = document.getElementById("schemeTable");
+        let categories = new Set();
+  
+        // Loop through each row and get unique categories
+        for (let i = 1; i < table.rows.length; i++) {
+          let category = table.rows[i].getElementsByTagName("td")[2].innerText.trim();
+          categories.add(category);
+        }
+  
+        // Generate filter options based on unique categories
+        let filterSelect = document.getElementById("filterSelect");
+        categories.forEach((category) => {
+          let option = document.createElement("option");
+          option.value = category.toLowerCase().replace(/\s+/g, '_'); // Convert category to lowercase and replace spaces with underscores for option values
+          option.textContent = category;
+          filterSelect.appendChild(option);
+        });
+      }
+  
+      function filter() {
+      let selectedCategory = document.getElementById("filterSelect").value;
+      let table = document.getElementById("schemeTable");
+      let rows = table.getElementsByTagName("tr");
+
+      // Loop through each row, hide those that don't match the selected category
+      for (let i = 1; i < rows.length; i++) {
+        let category = rows[i].getElementsByTagName("td")[2].innerText.trim().toLowerCase().replace(/\s+/g, '_');
+        if (selectedCategory === "all" || category === selectedCategory) {
+          rows[i].style.display = "";
+        } else {
+          rows[i].style.display = "none";
+        }
+      }
+    }
+
+    function search() {
+      let input = document.getElementById("searchInput").value.toUpperCase();
+      let table = document.getElementById("schemeTable");
+      let rows = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, hide those that don't match the search input
+      for (let i = 1; i < rows.length; i++) {
+        let found = false;
+        // Loop through all columns in current row
+        for (let j = 0; j < rows[i].cells.length; j++) {
+          let cell = rows[i].cells[j];
+          if (cell) {
+            let txtValue = cell.textContent || cell.innerText;
+            if (txtValue.toUpperCase().indexOf(input) > -1) {
+              found = true;
+              break;
+            }
+          }
+        }
+        if (found) {
+          rows[i].style.display = "";
+        } else {
+          rows[i].style.display = "none";
+        }
+      }
+    }
+    </script>
+    </head>
+    
+<body onload="populateFilterOptions()">
+  <h1>List of Government Schemes</h1>
+  <div class="user-section">
+    <!-- User Account Section -->
+    <!-- Links for user actions or authentication -->
+    
+    <!-- Additional user-related links or actions -->
+
+    <!-- This section can change based on user status (logged in/out) -->
+  </div>
+  <div class="container">
+  <div class="search-filter-container">
+    <input type="text" id="searchInput" onkeyup="search()" placeholder="Search for keywords...">
+    <select id="filterSelect" onchange="filter()">
+      <option value="all">All Categories</option>
+      
+    </select>
+  </div>
+  <div class="table-responsive">
+<table id="schemeTable">
+  <tr>
+    <th>Scheme</th>
+    <th>Description</th>
+    <th>Category</th>
+    <th>Eligibility</th>
+    <th>Beneficiaries</th>
+    <th></th>
+  </tr>
+  
+  <tr>
+    <td>Agriculture Infrastructure Fund</td>
+    <td>Agriculture Infrastructure Fund Scheme is a top-up scheme along with all other available state and central government schemes. Any grant or subsidy available under any present or future scheme of Central/State government can be availed for projects in addition to this financing facility.</td>
+    
+    <td>Agriculture</td>
+    <td>Should be one among the following :Agri-entrepreneurs,Farmer producer organization,Central, state agency or local body sponsored Public-Private Partnership projects,Farmers,Joint liability groups,Marketing cooperative societies,Registered Farmer Producer Organizations,Partnership/ Proprietary firms,Companies, Corporations, NGOs,Self Help Groups (SHGs).
+    </td>
+    <td>Farmers</td>
+    <td><a href="https://agriinfra.dac.gov.in/Home/WhoCanApply"><button>Click</button></a></td>
+  </tr>
+
+  <tr>
+    <td>PM Kisan Scheme</td>
+    <td>The primary feature of this Yojana is the minimum income support it provides to farmers. Each eligible farmer family is entitled to receive Rs. 6000 per annum across India. However, the amount is not disbursed at once.</td>
+    
+    <td>Agriculture</td>
+    <td>Be a small or marginal landholder farmer,Be between the ages of 18 and 40Have cultivable land of up to 2 hectares,Have a family consisting of a husband, wife, and minor children.</td>
+    <td>Farmers</td>
+    <td><a href="https://pmkisan.gov.in/"><button>Click</button></a></td>
+  </tr>
+  <tr>
+    <td>Pradhan Mantri Awas Yojna</td>
+    <td>PMAY-G aims to provide a Pakka house with basic amenities to all houseless households and households living in kutcha and dilapidated house in rural areas by 2024. The immediate objective is to cover 1.00 Crore households in rural areas, that are houseless or living in kutcha / dilapidated house, in three years from 2016-17 to 2018-19 and enable construction of quality houses by the beneficiaries using local materials, designs and trained masons. For houses to become homes, adoption of a habitat approach through convergence is proposed</td>
+    <td>Housing and Rural</td>
+    <td>EWS: Up to Rs. 3 lakh per year,LIG: Between Rs. 3 lakh and Rs. 6 lakh per year,MIG I: Between Rs. 6 lakh and Rs. 12 lakh per year,MIG II: Between Rs. 12 lakh and Rs. 18 lakh per year.must also not own a pucca house anywhere in India. 
+.    </td>
+    <td>Economically weaker section (EWS), low-income groups (LIGs) and Middle Income Groups (MIGs). </td>
+    <td><a href="http://pmaymis.gov.in/Auth/ActiveUser_ThroughOTP.aspx"><button>Click</button></a></td>
+  </tr>
+
+  <tr>
+    <td>Maternity Benefit Scheme (HBOCWWB)</td>
+    <td>The scheme “Maternity Benefit Scheme (HBOCWWB)” was launched by the Haryana Building and Other Construction Workers Welfare Board (HBOCWWB), Labour Department Haryana. Under this scheme, financial assistance of ₹36,000/- (i.e. ₹30,000/- for motherhood and ₹6000/- for nutritious food) will be given to women registered construction workers after the birth of the child. Further, the benefits under the scheme will be given to women registered workers on the birth of up to two children but is expandable up to the birth of three daughters irrespective of the order of their birth.</td>
+    <td>Women and Child Welfare</td>
+    <td>A registered women must have: A minimum of one-year regular membership,Not be eligible for maternity benefits if her husband is receiving paternity benefits from any department, board, or corporation,Have a wife who has delivered a baby,Have a wife who has not claimed maternity benefits from any other employer.</td>
+    <td>Women and Children</td>
+    <td><a href="https://saralharyana.gov.in/"><button>Click</button></a></td>
+  </tr>
+  <tr>
+    <td>Group Accident Insurance scheme for Fishermen</td>
+    <td>Group Accident Insurance scheme (GAIS) is being offered as part of the Pradhan Mantri Matsya Sampada Yojana (PMMSY) to offer insurance coverage to all the Fishers of the country.
+        The scheme is being implemented by National Fisheries Development Board (NFDB) through M/s Oriental Insurance Company Limited (OICL).</td>
+    <td>Social Insurance and Fisherman Welfare</td>
+    <td>Fisherman and fishers must be: Be between the ages of 18 and 70
+      Be approved by the State/UT fisheries department
+      Be a member of a fishermen or women co-operative society</td>
+    <td>Fishermen</td>
+    <td><a href="https://nfdb.gov.in/GAIS"><button>Click</button></a></td>
+  </tr>
+  <tr>
+    <td>Khelo India</td>
+    <td>The initiative's main aim is to boost youth's mass participation and achieve excellence in sports. The initiative has received better support from the government and has reached all rural parts of the country.</td>
+    <td>Sports Development intiative</td>
+    <td> One should :Be a resident of India
+      Be under the age of 17 or 21, depending on the category
+      Submit an Aadhaar card for age verification</td>
+    <td>Sports players of the sports:Archery, Yogasana, Cycling, Hockey, Kho Kho, Football, Swimming, Wushu, Taekwondo, Judo.</td>
+    <td><a href="https://nsrs.kheloindia.gov.in/"><button>Click</button></a></td>
+  </tr>
+  <tr>
+    <td>Online tickets registration for mission Olympics 2024</td>
+    <td>Absolutely! The mission for the Olympics 2024 is to bring together athletes from around the world to compete in various sports and promote unity and friendship. It's a chance for countries to showcase their talent and sportsmanship on a global stage. 🏅🌍</td>
+    <td>Sports Events Participations.</td>
+    <td>it requirements contains such as specified age limits for ticket registration, availability based on the user's location or country, and potential limits on the number of tickets per person or specific registration conditions. </td>
+    <td> scheme encompass sports enthusiasts and fans interested in attending the Olympics, athletes participating in the games, members of national delegations, and individuals associated with sports organizations or committees.</td>
+    <td><a href="https://dreamsetgo.co/paris2024hospitality/events"><button>Click</button></a></td>
+  </tr>
+  <tr>
+    <td>Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (PM-JAY)</td>
+    <td>Ayushman Bharat National Health Protection Scheme (AB-NHPS) aims to provide free access to healthcare for 50 crore people in the country. Implemented across India expect 3 states/UTs. By July 2021 Ayushman cards issued numbered 16.14 crore.By March 2022 hospitalisations under the scheme had crossed 30 million with a valuation of ₹35,000 crore (equivalent to ₹390 billion or US$4.9 billion in 2023).</td>
+    <td>Healthcare Insurance</td>
+    <td>its involve assessing individuals or families based on socioeconomic indicators, income thresholds, and coverage limitations to determine their eligibility for healthcare benefits under the program.</td>
+    <td>hospitals and healthcare providers offering covered services, and the wider public benefiting from better healthcare availability and lessened financial strain.</td>
+    <td><a href="https://www.eka.care/ayushman-bharat/create-abha-abdm-ndhm-health-id?utm_source=Paid&utm_medium=SEM&utm_campaign=Health-ID&utm_term=KWs&gclid=Cj0KCQjwrfymBhCTARIsADXTabkCl1-_rxLSNlb5zHzkl_PhSrAobIyI5ac3ZuNrkwdqc-2qLi2IOlEaAgi-EALw_wcB"><button>Click</button></a></td>
+  </tr>
+
+<tr>
+  <td>Start-Up India</td>
+  <td>Loans for scheduled castes, scheduled tribes and women entrepreneurs for greenfield enterprises. Loans can be applied online. By July 2021, 1.16 lakh loans disbursed amounting to ₹26,204 crore (equivalent to ₹290 billion or US$3.7 billion in 2023).By 2022, 81% of loan beneficiaries are women. </td>
+  <td>Business Funding Initiatives</td>
+  <td>individuals from scheduled castes, scheduled tribes, and women entrepreneurs seeking loans for greenfield enterprises.</td>
+  <td>women entrepreneurs who receive loans for greenfield enterprises, with a notable focus on empowering women as 81% of the loan beneficiaries are women by 2022, fostering economic empowerment in marginalized communities.</td>
+  <td><a href="https://www.startupindia.gov.in/content/sih/en/registration.html"><button>Click</button></a></td>
+</tr>
+<tr>
+  <td>PMSBY ( Pradhan Mantri Suraksha Bima Yojana )</td>
+  <td>The authorities keep coming up with beneficial welfare schemes for citizens belonging to different strata of society. The Pradhan Mantri Suraksha Bima Yojana is one such scheme. It is an Accident Insurance policy that was discussed in 2015’s budget speech. It was launched two months later in May 2015. </td>
+  <td>Accident Insurance Policy</td>
+  <td>allow individuals who aged between 18 to 70 with a linked bank account to enroll by paying an annual premium.</td>
+  <td>Secured insurance among unfortunate accident for those who enrolled into paying an annual premium.</td>
+  <td><a href="https://www.acko.com/health-insurance/pradhan-mantri-suraksha-bima-yojana/"><button>Click</button></a></td>
+</tr>
+<tr>
+  <td>PM Jeevan Jyoti Bima Yojana</td>
+  <td>This life insurance scheme for individuals can be renewed every year. </td>
+  <td>Life Insurance Policy</td>
+  <td>Individuals are specified within age range,often between 18 to 50 or 55 years.and have a bank account linked to the scheme for annual premium payments and enrollment purposes.</td>
+  <td>In case of the insured person's demise, the scheme benefits their families or dependents.</td>
+  <td><a href="https://www.jansuraksha.gov.in/Files/PMJJBY/English/ApplicationForm.pdf#zoom=250"><button>Click</button></a></td>
+</tr>
+
+</table>
+</div>
+</div>
+</body>
+</html>
